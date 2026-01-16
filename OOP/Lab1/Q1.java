@@ -10,6 +10,6 @@ class Q1 {
         System.out.println("Difference is " + (a - b));
         System.out.println("Product is " + (a * b));
         System.out.println("Quotient is " + (a / b));
-
+        sc.close();
     }
 }

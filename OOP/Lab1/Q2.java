@@ -13,6 +13,6 @@ class Q2 {
         } else {
             System.out.println("The numbers are equal");
         }
-
+        sc.close();
     }
 }

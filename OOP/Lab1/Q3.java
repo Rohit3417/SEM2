@@ -34,5 +34,6 @@ public class Q3 {
                 System.out.println("Integer:A is smallest");
             }
         }
+        sc.close();
     }
 }

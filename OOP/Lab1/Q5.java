@@ -13,5 +13,6 @@ public class Q5 {
             System.out.print(" " + (sum % 10));
             sum /= 10;
         }
+        sc.close();
     }
 }

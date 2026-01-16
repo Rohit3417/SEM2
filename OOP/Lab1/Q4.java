@@ -8,5 +8,7 @@ public class Q4 {
         System.out.println("Diameter of circle is " + (radius * 2));
         System.out.println("Circumference is " + (2 * Math.PI * radius));
         System.out.println("Area of the circle is " + (Math.PI * radius * radius));
+        sc.close();
     }
+
 }

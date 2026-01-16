@@ -1,7 +1,7 @@
 #include<stdio.h>
 int main()
 {
-    int arr[3][3];
+    int arr[2][3];
     int i,j;
     int *base = &arr[0][0] ;
     int size = sizeof(int) ; 
@@ -16,7 +16,7 @@ int main()
     
 
     //Column major formula;
-    int *loc2 = (void*)base + ((j)*3 + i)*size ;
+    int *loc2 = (void*)base + ((j)*2 + i)*size ;
     printf("Location by CMO formula is %d\n",loc2);
     printf("Actual location is %d",&arr[i][j]);
 
