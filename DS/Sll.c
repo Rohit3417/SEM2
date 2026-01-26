@@ -59,8 +59,8 @@ int main()
 {
     struct node *head,*fnode,*temp;
     head = 0;
-    int choice = 1,count=0;
-    while(choice)
+    int choice ,count=0;
+    do
     {
         fnode = (struct node*)malloc(sizeof(struct node));
         printf("Enter data\n");
@@ -78,7 +78,7 @@ int main()
         }
         printf("Do you want to continue (1/0)");
         scanf("%d",&choice);
-    }
+    }while(choice);
     displayNode(head);
     delete(head);
     displayNode(head);
