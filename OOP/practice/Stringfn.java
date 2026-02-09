@@ -11,7 +11,8 @@ public class Stringfn {
         // boolean result5 = name.isEmpty();
         // String result6 = name.toUpperCase();
         // String result7 = name.toLowerCase();
-        // String result8 = name.trim(); // Removes all the sapces
+        // String result8 = name.trim(); // Removes all the spaces only from left and
+        // right
         // String result9 = name.replace("R", "M");
 
     }

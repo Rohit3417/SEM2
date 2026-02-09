@@ -1,0 +1,4 @@
+for the outer loop ,count no. o fline
+for inner loop,focus on columns and try to connect them to rows
+print inside the inner loop
+observe symmetry (optional)

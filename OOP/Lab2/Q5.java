@@ -15,7 +15,6 @@ public class Q5 {
         float sum = 0, temp;
         while (choice != 0) {
             System.out.println("Enter miles drove for this trip");
-            ;
             trip.miles = sc.nextInt();
             System.out.println("Enter in gallons petrol used");
             trip.gasMeasure = sc.nextInt();

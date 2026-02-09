@@ -12,7 +12,7 @@ public class Wrapper {
         // boolean Boolean
         // char Character
         // int Integer
-        // double double
+        // double Double
 
         // autoboxing = the automatic conversion that the java compiler makes between
         // the primitive type and refrence type
