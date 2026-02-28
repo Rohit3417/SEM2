@@ -15,7 +15,7 @@ int main()
     newnode1 = (struct node *)malloc(sizeof(struct node));
     newnode2 = (struct node *)malloc(sizeof(struct node));
     newnode3 = (struct node *)malloc(sizeof(struct node));
-    head->data = 30;
+    head->data = 50;
     newnode1->data = 20;
     newnode2->data = 30;
     newnode3->data = 40;

@@ -1,34 +1,77 @@
 #include<bits/stdc++.h>
 using namespace std;
+
+struct node {
+    char data;
+    struct node *next;
+
+};
+
+struct node*top = NULL;
+
+void push(char x)
+{
+    struct node *newnode;
+    newnode = new node;
+   
+    newnode->data = x ;
+    newnode->next = top;
+    top = newnode;
+}
+
+void pop()
+{
+    struct node *temp;
+    temp = top;
+    top = top->next;
+    delete temp;
+}
+
+char peek()
+{
+    return top->data;
+}
+
+bool empty()
+{
+    if(top == NULL)
+    {
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 int ans(string s)
 {
-    stack<int> store;
+    
     int a,b,temp;
     for(int i = 0;i<s.size();i++)
     {
         if(isdigit(s[i]))
         {
             temp = s[i] - '0';
-            store.push(temp);
+            push(temp);
         } 
         else 
         {
-            a = store.top();
-            store.pop();
-            b = store.top();
-            store.pop();
+            a = peek();
+            pop();
+            b = peek();
+            pop();
             if(s[i] == '+')
-                store.push(b+a);
+                push(b+a);
             else if(s[i] == '-')
-                store.push(b-a);
+                push(b-a);
             else if(s[i] == '*')
-                store.push(b*a);
+                push(b*a);
             else if(s[i] == '/')
-                store.push(b/a);
+                push(b/a);
             
         }
     }
-    return store.top();  
+    return peek();  
 }
 
 int main()

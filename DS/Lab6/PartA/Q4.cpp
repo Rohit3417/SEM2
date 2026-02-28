@@ -8,9 +8,50 @@ int precedence(char op)
     return 0;
 }
 
+struct node {
+    char data;
+    struct node *next;
+
+};
+
+struct node*top = NULL;
+
+void push(char x)
+{
+    struct node *newnode;
+    newnode = new node;
+   
+    newnode->data = x ;
+    newnode->next = top;
+    top = newnode;
+}
+
+void pop()
+{
+    struct node *temp;
+    temp = top;
+    top = top->next;
+    delete temp;
+}
+
+char peek()
+{
+    return top->data;
+}
+
+bool empty()
+{
+    if(top == NULL)
+    {
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 string convert(string s)
 {
-    stack<char> store;
+    
     string str = "";
 
     for(int i = 0; i < s.size(); i++)
@@ -24,38 +65,38 @@ string convert(string s)
         // Opening bracket
         else if(s[i] == '(')
         {
-            store.push(s[i]);
+            push(s[i]);
         }
 
         // Closing bracket
         else if(s[i] == ')')
         {
-            while(!store.empty() && store.top() != '(')
+            while(!empty() && peek() != '(')
             {
-                str += store.top();
-                store.pop();
+                str += peek();
+                pop();
             }
-            if(!store.empty())
-                store.pop();
+            if(!empty())
+                pop();
         }
 
         // Operator
         else
         {
-            while(!store.empty() && precedence(store.top()) >= precedence(s[i]))
+            while(!empty() && precedence(peek()) >= precedence(s[i]))
             {
-                str += store.top();
-                store.pop();
+                str += peek();
+                pop();
             }
-            store.push(s[i]);
+            push(s[i]);
         }
     }
 
     // Remaining operators
-    while(!store.empty())
+    while(!empty())
     {
-        str += store.top();
-        store.pop();
+        str += peek();
+        pop();
     }
 
     return str;

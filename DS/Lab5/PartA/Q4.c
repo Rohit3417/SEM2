@@ -16,10 +16,10 @@ int main()
     newnode1 = (struct node *)malloc(sizeof(struct node));
     newnode2 = (struct node *)malloc(sizeof(struct node));
     newnode3 = (struct node *)malloc(sizeof(struct node));
-    head->data = 10;
-    newnode1->data = 20;
-    newnode2->data = 10;
-    newnode3->data = 40;
+    head->data = 5;
+    newnode1->data = 2;
+    newnode2->data = 4;
+    newnode3->data = 2;
     head->next = newnode1;
     head->prev = 0;
     newnode1->next = newnode2;
@@ -78,6 +78,7 @@ void removeDuplicates(struct node **head)
                     temp2->next->prev = temp2->prev;
                     temp2->prev->next = temp2->next;
                 }
+                temp2 = temp2->prev;
                 continue;
             }
             temp2 = temp2->next;

@@ -80,7 +80,16 @@ void swap(struct node **head,int pos1,int pos2)
             if(pos1 == 1)
             *head = temp2;
         }
-        if(temp1->next == temp2)
+        else if(temp1 == *head )
+        {   
+            temp2->next->prev = temp1;
+            temp1->next = temp2->next;
+            temp2->next = temp1;
+            temp2->prev = temp1->prev;
+            temp1->prev = temp2;
+            *head = temp2;
+        }
+        else
         {
             temp1->prev->next = temp2;
             temp2->next->prev = temp1;
@@ -88,7 +97,6 @@ void swap(struct node **head,int pos1,int pos2)
             temp2->next = temp1;
             temp2->prev = temp1->prev;
             temp1->prev = temp2;
-
         }
         
 }

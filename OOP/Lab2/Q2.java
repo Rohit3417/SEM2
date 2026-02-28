@@ -2,7 +2,7 @@
 /*
 setters and getters help to protect object data and add rules for accessing or modifying 
 Setters = Methods that make a field writable
-Gettrs = Methods that make a field readable
+Getters = Methods that make a field readable
 */
 package OOP.Lab2;
 

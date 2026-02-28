@@ -14,27 +14,25 @@ void display(struct node *head)
     }
 }
 
-void reverse(struct node **head,int k)
+struct node * reverse(struct node *head,int k)
 {
-    int i=1;
+    int count=0;
     struct node *prev,*current,*nextnode,*temp;
-    prev = 0;
-    current = nextnode = *head ;
-    while(i<=k)
+    prev = nextnode = 0;
+    current = head;
+    while(current != NULL && count < k)
     {
-        if(current == *head)
-        {
-            temp = current ;
-        }
-        nextnode = nextnode->next ;
+        nextnode = current->next;
         current->next = prev;
-        prev = current ;
-        current = nextnode ;
-        i++;
+        prev = current;
+        current = nextnode;
+        count++;
     }
-    *head = prev;
-    temp->next = nextnode;
-    
+    if(nextnode != NULL)
+    {
+        head->next = reverse(nextnode,k);
+    }
+    return prev;
 }
 
 int main()
@@ -68,7 +66,7 @@ int main()
     int k;
     printf("Enter number of nodes you want to reverse : ");
     scanf("%d",&k);
-    reverse(&head,k);
+    head = reverse(head,k);
     display(head);
     
 }

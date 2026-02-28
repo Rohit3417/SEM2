@@ -6,7 +6,7 @@ struct node{
 };
 
 void display(struct node *head);
-struct node* insert(struct node **head,int num,int pos);
+void insert(struct node **head,int num);
 
 int main()
 {
@@ -15,22 +15,23 @@ int main()
     newnode1 = (struct node *)malloc(sizeof(struct node));
     newnode2 = (struct node *)malloc(sizeof(struct node));
     newnode3 = (struct node *)malloc(sizeof(struct node));
-    head->data = 10;
-    newnode1->data = 20;
-    newnode2->data = 30;
-    newnode3->data = 40;
+    head->data = 1;
+    newnode1->data = 3;
+    newnode2->data = 5;
+    newnode3->data = 7;
     head->next = newnode1;
     newnode1->next = newnode2;
     newnode2->next = newnode3;
     newnode3->next = head;
 
-    int num,pos;
+    int num;
     display(head);
-    printf("\nEnter a number to insert and its position : ");
-    scanf("%d %d",&num,&pos);
+    printf("\nEnter a number to insert into the sorted list ");
+    scanf("%d",&num);
     
     printf("After insertion : ");
-    display(insert(&head,num,pos));
+    insert(&head,num);
+    display(head);
 
 }
 
@@ -46,49 +47,34 @@ void display(struct node *head)
     printf("%d",temp->data);
 }
 
-struct node* insert(struct node **head,int num,int pos)
+void insert(struct node **head,int num)
 {
-    int count = 1;
-    struct node *temp,*newnode;
+    
+    struct node *temp,*newnode,*temp2;
     newnode = (struct node *)malloc(sizeof(struct node));
     newnode->data = num;
     newnode->next = 0;
-    temp = *head;
-    while(temp->next != *head)
+    temp = temp2 = *head;
+    while(num > temp->data)
     {
+        temp2 = temp;
         temp = temp->next ;
-        count++;
     }
-    if (pos == count)
+   
+    if(temp == *head)
     {
-        temp->next = newnode;
-        newnode->next = *head ;
-        return *head;
-    }
-    else if (pos == 1)
-    {
-        newnode->next = *head;
+        newnode->next = temp2;
         *head = newnode;
+        while(temp->next != temp2)
+        {
+            temp = temp->next;
+        }
         temp->next = *head;
-        return *head;
     }
-    else
+    else if(temp2->next != *head)
     {
-        temp = *head ;
-        int i = 1;
-        if(pos > count || pos == 0)
-        {
-            printf("Invalid position\n");
-            return *head;
-        }
-        
-        while(i<pos-1)
-        {
-            temp = temp->next ;
-            i++;
-        }
-        newnode ->next = temp->next;
-        temp->next = newnode;
-        return *head;
-    }
+        newnode->next = temp2->next;
+        temp2->next = newnode;
+    } 
+    
 }   

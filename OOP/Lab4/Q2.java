@@ -7,12 +7,12 @@ public class Q2 {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter password : ");
         String pass = sc.next();
-        int j = 1, len = pass.length(), temp = 0;
+        int len = pass.length(), temp = 0;
         if (len < 5 || len > 12) {
             System.out.println("Password not acceptable");
             temp = 1;
         }
-        for (; j < len; j++) {
+        for (int j = 1; j < len; j++) {
             if (pass.charAt(j) == pass.charAt(j - 1)) {
                 System.out.println("Password not acceptable");
                 temp = 1;
