@@ -1,5 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+//CHECKING FOR PALINDROME
+
 struct node{
     int data ;
     struct node *next;
@@ -32,7 +35,7 @@ struct node *reverse(struct node *head)
 
 int check(struct node *head,struct node *head2)
 {
-    while(head != 0)
+    while(head != 0 && head2 != 0)
     {
         if(head->data != head2->data)
         {

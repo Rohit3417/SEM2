@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-//REVERSE THE CLL
+//COUNT NODES IN CLL
 
 struct node{
     int data;
@@ -9,30 +9,31 @@ struct node{
 };
 
 void display(struct node *head);
-void reverse(struct node **head);
+int count(struct node *head);
+
 
 int main()
 {
-    struct node *head,*newnode1,*newnode2,*newnode3;
+    struct node *head,*newnode1,*newnode2,*newnode3,*newnode4;
     head = (struct node *)malloc(sizeof(struct node));
     newnode1 = (struct node *)malloc(sizeof(struct node));
     newnode2 = (struct node *)malloc(sizeof(struct node));
     newnode3 = (struct node *)malloc(sizeof(struct node));
+    newnode4 = (struct node *)malloc(sizeof(struct node));
     head->data = 10;
     newnode1->data = 20;
     newnode2->data = 30;
     newnode3->data = 40;
+    newnode4->data = 50;
     head->next = newnode1;
     newnode1->next = newnode2;
     newnode2->next = newnode3;
-    newnode3->next = head;
+    newnode3->next = newnode4;
+    newnode4->next = head;
 
     display(head);
-    reverse(&head);
-    printf("\n");
-    display(head);
-
-
+    int nodes = count(head);
+    printf("Total number of nodes: %d" ,nodes);
 }
 
 void display(struct node *head)
@@ -44,22 +45,18 @@ void display(struct node *head)
         printf("%d ",temp->data);
         temp = temp->next;
     }
-    printf("%d",temp->data);
+    printf("%d\n",temp->data);
 }
 
-void reverse(struct node **head)
+int count(struct node *head)
 {
-    struct node *temp,*prev,*current,*nextnode;
-    current = nextnode = *head;
-    prev = 0;
-    while(current->next != *head)
+    int node = 1;
+    struct node *temp ;
+    temp = head;
+    while(temp->next != head)
     {
-        nextnode = nextnode->next;
-        current->next = prev ;
-        prev = current;
-        current = nextnode;
+        node++;
+        temp = temp->next;
     }
-    nextnode->next->next = current;
-    current->next = prev;
-    *head = current;
-}           
+    return node;
+}

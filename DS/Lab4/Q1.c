@@ -1,5 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+//FIND THE MIDDLE ELEMENT OF LINKED LIST
+
 struct node{
     int data ;
     struct node *next;

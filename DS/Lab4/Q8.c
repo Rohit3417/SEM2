@@ -1,6 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+
+//MERGE SORT OF LINKED LIST
+
 struct node {
     int data;
     struct node *next;

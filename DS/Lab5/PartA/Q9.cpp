@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+//CLONING DLL WITH RANDOM POINTER
+
 class Node {
 public:
     int data;

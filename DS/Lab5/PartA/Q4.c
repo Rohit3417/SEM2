@@ -1,5 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+//REMOVE DUPLICATES FROM DLL
+
 struct node{
     int data;
     struct node *next;
@@ -59,11 +62,16 @@ void removeDuplicates(struct node **head)
         {
             if(temp1->data == temp2->data)
             {
-                if(temp1 == *head)
+                if(temp1 == *head && temp1->next != temp2)
                 {
                     *head = temp1->next;
                     temp2->next->prev = temp2->prev;
                     temp2->prev->next = temp2->next;
+                }
+                else if(temp1->next == temp2 && temp1 == *head)
+                {
+                    *head = temp1->next->next;
+                    temp2->next->prev = 0;
                 }
                 else if(temp2->next == 0)
                 {
@@ -78,9 +86,9 @@ void removeDuplicates(struct node **head)
                     temp2->next->prev = temp2->prev;
                     temp2->prev->next = temp2->next;
                 }
-                temp2 = temp2->prev;
-                continue;
+                
             }
+           
             temp2 = temp2->next;
         }
         temp1 = temp1->next;

@@ -1,6 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+//DETECTION OF INTERSECTION OF TWO LIST
+
+
 struct node{
     int data ;
     struct node *next;
@@ -48,11 +51,11 @@ int main()
     newnode3->data = 6;
     newnode4->data = 1;
     newnode5->data = 5;
-    head1->next = newnode1;
-    newnode1->next = newnode2;
+    head1->next = newnode1;             //head1->newnode1->newnode2->newnode5->0
+    newnode1->next = newnode2;          //head2->newnode3->newnode4-> ^
     head2->next = newnode3;
     newnode3->next = newnode4;
-    newnode4->next = 0;
+    newnode4->next = newnode5;          //connecting point ,make null to break intersection
     newnode2->next = newnode5;
     newnode5->next = 0;
 

@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+//FLATTEN LINKED LIST WITH BOTTOM AND NEXT POINTER AND SORT 
+
 struct Node {
     int data;
     Node* next;

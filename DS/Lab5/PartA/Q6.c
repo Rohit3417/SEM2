@@ -1,5 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+//CHECK FOR PALINDROME IN DLL
+
 struct node{
     int data;
     struct node *next;
@@ -63,7 +66,7 @@ int check(struct node *head)
         count++;
     }
     count /= 2;
-    for(int i=0;i<2;i++)
+    for(int i=0;i<count;i++)
     {
         if(head->data != tail->data)
         {

@@ -1,6 +1,8 @@
 #include<iostream>
 using namespace std;
 
+//CLONING LINKED LIST WITH RANDOM POINTER
+
 struct Node {
     int data;
     Node* next;
@@ -20,7 +22,7 @@ Node* cloneList(Node* head)
 
     Node* temp = head;
 
-    // Step 1: Insert cloned nodes in between
+    //Insert cloned nodes in between
     while(temp != NULL)
     {
         Node* copy = new Node(temp->data);
@@ -29,7 +31,7 @@ Node* cloneList(Node* head)
         temp = copy->next;
     }
 
-    // Step 2: Assign random pointers
+    // Assign random pointers
     temp = head;
     while(temp != NULL)
     {
@@ -39,7 +41,7 @@ Node* cloneList(Node* head)
         temp = temp->next->next;
     }
 
-    // Step 3: Separate both lists
+    //Separate both lists
     temp = head;
     Node* cloneHead = head->next;
 

@@ -1,5 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+//FINDING PAIR SUCH THAT THEIR SUM = TARGET GIVEN
+
 struct node{
     int data;
     struct node *next;
@@ -19,7 +22,7 @@ int main()
     head->data = 10;
     newnode1->data = 20;
     newnode2->data = 30;
-    newnode3->data = 40;
+    newnode3->data = 10;
     head->next = newnode1;
     head->prev = 0;
     newnode1->next = newnode2;
@@ -34,9 +37,6 @@ int main()
     printf("\nEnter sum : ");
     scanf("%d",&sum);
     check(head,sum);
-    
-
-
 }
 
 void display(struct node *head)
@@ -64,7 +64,6 @@ void check(struct node *head,int sum)
             {
                 printf("%d,%d\n",temp1->data,temp2->data);
                 c = 1;
-                break;
             }
             temp2 = temp2->next;
         }

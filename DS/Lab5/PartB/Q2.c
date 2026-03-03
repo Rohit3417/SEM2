@@ -1,5 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+//CHECKING IF SORTED LIST OR NOT
+
 struct node{
     int data;
     struct node *next;

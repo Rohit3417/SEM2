@@ -1,5 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+//REMOVE DUPLICATE VALUES
+
 struct node{
     int data ;
     struct node *next;

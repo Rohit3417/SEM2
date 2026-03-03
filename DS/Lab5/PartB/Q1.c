@@ -1,5 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+//SPLIT CIRCULAR LIST INTO TWO
+
 struct node{
     int data;
     struct node *next;

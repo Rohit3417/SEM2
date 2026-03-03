@@ -1,15 +1,16 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-//DELETE ALL NODES AT EVERY KTH POSITION
+//CIRCULAR TO LINEAR LINKED LIST CONVERSION 
 
 struct node{
     int data;
     struct node *next;
 };
 
-void display(struct node *head);
-void delete(struct node **head,int k);
+void displayCircular(struct node *head);
+void displayLinear(struct node *head);
+void convert(struct node **head);
 
 int main()
 {
@@ -30,17 +31,13 @@ int main()
     newnode3->next = newnode4;
     newnode4->next = head;
 
-    display(head);
-    
-    int k;
-    printf("\nEnter value of K : ");
-    scanf("%d",&k);
-    delete(&head,k);
-    display(head);
+    displayCircular(head);
+    convert(&head);
+    displayLinear(head);
 
 }
 
-void display(struct node *head)
+void displayCircular(struct node *head)
 {
     struct node *temp ;
     temp = head;
@@ -49,25 +46,28 @@ void display(struct node *head)
         printf("%d ",temp->data);
         temp = temp->next;
     }
-    printf("%d",temp->data);
+    printf("%d\n",temp->data);
 }
 
-void delete(struct node **head,int k)
+void convert(struct node **head)
 {
-    struct node *temp1,*temp2;
-    temp1 = *head;
-    temp2 = 0;
-    while(temp2!= *head)
+    struct node *temp;
+    temp = *head;
+    while(temp->next != *head)
     {
-        int i=1;
-        while(i<k)
-        {
-            temp2 = temp1;
-            temp1 = temp1->next;
-            i++;
-        }
-        temp2->next = temp1->next;
-        temp1 = temp1->next ;
-        *head = temp1;
+        temp = temp->next;
     }
+    temp->next = 0;
+}
+
+void displayLinear(struct node *head)
+{
+    struct node *temp;
+    temp = head;
+    while(temp != 0)
+    {
+        printf("%d ",temp->data);
+        temp = temp->next;
+    }
+    
 }

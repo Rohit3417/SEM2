@@ -1,5 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+//MERGE SORT 2 LISTS
+
 struct node{
     int data;
     struct node *next;

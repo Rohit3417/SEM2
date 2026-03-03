@@ -1,5 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+//INSERTING AN ELEMENT INTO SORTED LIST AT CORRECT POSITION
+
 struct node{
     int data;
     struct node *next;
@@ -55,13 +58,13 @@ void insert(struct node **head,int num)
     newnode->data = num;
     newnode->next = 0;
     temp = temp2 = *head;
-    while(num > temp->data)
+    while(num > temp->data && temp2->next != *head)
     {
         temp2 = temp;
         temp = temp->next ;
     }
    
-    if(temp == *head)
+    if(temp == *head && temp2->next != *head)
     {
         newnode->next = temp2;
         *head = newnode;
@@ -76,5 +79,9 @@ void insert(struct node **head,int num)
         newnode->next = temp2->next;
         temp2->next = newnode;
     } 
+    else{
+        temp2->next = newnode;
+        newnode->next = *head;
+    }
     
 }   

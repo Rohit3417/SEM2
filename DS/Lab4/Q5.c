@@ -1,5 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+//REVERSING NODES IN K GROUP
+
 struct node{
     int data ;
     struct node *next;
