@@ -17,10 +17,10 @@ void display(struct node *head)
     }
 }
 
-struct node * reverse(struct node *head,int k)
+struct node* reverse(struct node *head,int k)
 {
     int count=0;
-    struct node *prev,*current,*nextnode,*temp;
+    struct node *prev,*current,*nextnode;
     prev = nextnode = 0;
     current = head;
     while(current != NULL && count < k)

@@ -21,7 +21,7 @@ int main()
     head->data = 10;
     newnode1->data = 20;
     newnode2->data = 30;
-    newnode3->data = 40;
+    newnode3->data = 20;
     head->next = newnode1;
     newnode1->next = newnode2;
     newnode2->next = newnode3;

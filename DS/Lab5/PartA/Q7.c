@@ -20,7 +20,7 @@ void sort(struct node *l1,struct node *l2)
         if(l1->data <= l2->data)
         {
             tail->next = l1;
-            l1 = l1->next ;
+            l1 = l1->next  ;
         }
         else
         {
