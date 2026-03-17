@@ -20,7 +20,7 @@ public class Q5 {
             trip.gasMeasure = sc.nextInt();
             temp = trip.miles / trip.gasMeasure;
             System.out.println("miles per gallons for this trip is " + temp);
-            sum += trip.miles / trip.gasMeasure;
+            sum += temp;
             System.out.println("Do you want to enter more info(1:continue,0;end)");
             choice = sc.nextInt();
         }

@@ -18,7 +18,8 @@ public class Q2 {
                 temp = 1;
                 break;
             }
-            if (pass.charAt(j - 1) < 'a' || pass.charAt(j - 1) > 'z') {
+            if (pass.charAt(j - 1) < 'a' || pass.charAt(j - 1) > 'z' && pass.charAt(j - 1) < '0'
+                    || pass.charAt(j - 1) > '9') {
                 System.out.println("Password not acceptable");
                 temp = 1;
                 break;
@@ -27,7 +28,7 @@ public class Q2 {
 
                 if (i != 0 && pass.charAt(j - 1) == pass.charAt(i)) {
                     int p = i;
-                    temp = 1;
+
                     for (int k = j; k < i && p < len - 1; k++) {
                         if (pass.charAt(k) == pass.charAt(p + 1)) {
                             temp = 1;

@@ -1,22 +1,27 @@
 package OOP;
 
-interface car {
-    int wheels = 4;
-
-    void show();
-}
-
-class Vehicle implements car {
-    public void show() {
-        System.out.println("it is a car");
+class A {
+    void show() {
+        System.out.println("A shows");
     }
 }
 
-class Main {
-    public static void main(String[] args) {
-        Vehicle a = new Vehicle();
-        a.show();
-        System.out.println(a.wheels);
+class B extends A {
+    void show(int i) {
+        System.out.println("B shows" + i);
+    }
+}
 
+public class Q {
+    public static void main(String[] args) {
+        A a = new A();
+        a.show();
+        // a.show(10); wrong
+        B b = new B();
+        b.show();
+        b.show(10);
+        A c = new B();
+        c.show();
+        // c.show(10); wrong
     }
 }

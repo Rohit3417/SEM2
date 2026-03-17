@@ -27,10 +27,11 @@ public class Q7 {
         }
 
         System.out.println("Question  Submitted Ans  Correct Ans  Result");
-
+        System.out.println("-----------------------------------------------");
         for (int i = 0; i < 8; i++) {
-            System.out.println(i + "\t\t" + UserAns.charAt(i) + "\t\t" + Ans.charAt(i) + "\t" + arr[i]);
+            System.out.println((i + 1) + "\t\t" + UserAns.charAt(i) + "\t\t" + Ans.charAt(i) + "\t" + arr[i]);
         }
+
         System.out.println("No. of Correct answers : " + correct);
         System.out.println("No. of Wrong answers : " + wrong);
         System.out.println("No. of Unattempted questions : " + Unattempted);

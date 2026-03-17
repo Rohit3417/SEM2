@@ -15,7 +15,7 @@ class figure {
 class cone extends figure {
     double h, s;
 
-    public void calcArea() { // Area of cone is pi*r*r+pi*r*s where s is slant height
+    void calcArea() { // Area of cone is pi*r*r+pi*r*s where s is slant height
         a = (Math.PI * r * r + Math.PI * r * s);
     }
 

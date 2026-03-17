@@ -17,7 +17,7 @@ class check {
 }
 
 public class Q2 {
-    public static void main(String[] args) throws NotHex {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         check q = new check();
         String num;

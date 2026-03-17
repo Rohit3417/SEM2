@@ -23,7 +23,18 @@ public class Q7 {
                 status[i] = "Wrong";
             }
         }
+        System.out.println("Question  Submitted Ans  Correct Ans  Result");
+        System.out.println("-----------------------------------------------");
+        for (int i = 0; i < 4; i++) {
+            System.out.println((i + 1) + "\t\t" + SubAns.charAt(i) + "\t\t" + Ans.charAt(i) + "\t" + status[i]);
+        }
 
+        System.out.println("No. of Correct answers : " + correct);
+        System.out.println("No. of Wrong answers : " + wrong);
+        System.out.println("No. of Unattempted questions : " + Unattempted);
+        if (correct >= 5) {
+            System.out.println("Student passed the exam");
+        }
         sc.close();
 
     }
