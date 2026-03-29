@@ -17,10 +17,14 @@ public class Q4 {
             System.out.println(str);
 
             for (int j = 0; j < str.length(); j++) {
-                if (j == 0 || str.charAt(j) == ' ' || str.charAt(j) == '.' || str.charAt(j) == ','
+                if (str.charAt(j) == ' ' || str.charAt(j) == '.' || str.charAt(j) == ','
                         || str.charAt(j) == '\n') {
                     char temp = Character.toUpperCase(str.charAt(j + 1));
-
+                    str.setCharAt(j + 1, temp);
+                }
+                if (j == 0) {
+                    char temp = Character.toUpperCase(str.charAt(j));
+                    str.setCharAt(j, temp);
                 }
             }
             System.out.println(str);

@@ -1,48 +1,36 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
+#include <unordered_map>
 using namespace std;
 
-bool check(vector<int>a,vector<int>b)
-{
-    for(int i = 0;i<b.size();i++)
-    {
-        int temp = 0;
-        for(int j=0;j<a.size();j++)
-        {
-            if(b[i] == a[j])
-            {
-                temp = 1;
-                break;
-            }
-        }
-        if(temp == 0)
-        {
-            return false;
-        }
-    }
-    return true;
-}
 
-int main()
-{
-    vector<int>a(7);
-    vector<int>b(5);
+int main(){
+    
+    vector<int>a(6);
+    vector<int>b(4);
     cout<<"Enter elements of array A : "<<endl;
-    for(int i=0;i<7;i++)
+    for(int i=0;i<6;i++)
     {
         cin>>a[i];
     }
     cout<<"Enter elements of array B : "<<endl;
-    for(int i=0;i<5;i++)
+    for(int i=0;i<4;i++)
     {
         cin>>b[i];
     }
-    if(check(a,b))
+    map<int,int>mpp;
+    int flag = 1;
+    for (int i = 0; i < 6; i++)
     {
-        cout<<"true";
+       mpp[a[i]]++;
     }
+    for (int i = 0; i < 6; i++)
+    {
+       if(mpp[b[i]]==0)
+       flag == 0;
+    } 
+    if(flag == 0)
+    cout<<"false";
     else
-    {
-        cout<<"false";
-    }
-
+    cout<<"true";
+    return 0;
 }

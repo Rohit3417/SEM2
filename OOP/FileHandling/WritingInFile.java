@@ -1,4 +1,4 @@
-package OOP.practice;
+package OOP.FileHandling;
 
 import java.io.File;
 import java.io.FileWriter;
