@@ -8,10 +8,13 @@ public class Main {
         int choice;
 
         System.out.println("!! WELCOME TO THE COURSE REGISTRATION PROGRAM !!");
+        System.out.println("------------------------------------------------");
         System.out.println("Enter : ");
+
         System.out.println("1 for Student login");
         System.out.println("2 for Faculty login");
         System.out.println("3 for Admin");
+        System.out.println("------------------------------------------------");
 
         Common_function user;
         choice = sc.nextInt();

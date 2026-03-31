@@ -5,7 +5,9 @@ import java.util.Scanner;
 
 public class Faculty extends Common_function {
     Faculty() {
+        System.out.println("---------------------");
         System.out.println("Faculty login");
+        System.out.println("---------------------");
     }
 
     void DisplayFunctionality() {

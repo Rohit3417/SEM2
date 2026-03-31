@@ -3,7 +3,9 @@ package Assignment;
 public class Admin extends Common_function {
 
     Admin() {
+        System.out.println("---------------------");
         System.out.println("Admin login");
+        System.out.println("---------------------");
     }
 
     void DisplayFunctionality() {

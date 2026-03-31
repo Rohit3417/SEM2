@@ -69,7 +69,8 @@ public abstract class Common_function {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 Connection con = DriverManager.getConnection(url, username, password);
 
-                PreparedStatement ptsmt = con.prepareStatement("SELECT*FROM Project WHERE email=? AND pass=?");
+                PreparedStatement ptsmt = con
+                        .prepareStatement("SELECT*FROM Project WHERE email=? AND pass=? AND code = ?");
                 ptsmt.setString(1, email);
                 ptsmt.setString(2, pass_by_user);
 

@@ -10,7 +10,9 @@ import java.sql.Statement;
 
 public class Student extends Common_function {
     Student() {
+        System.out.println("---------------------");
         System.out.println("Student login");
+        System.out.println("---------------------");
     }
 
     void DisplayFunctionality() {
@@ -130,15 +132,43 @@ public class Student extends Common_function {
     ArrayList<Schedule> list2 = new ArrayList<>();
 
     void Register(String course) {
-        for (int i = 0; i < 3; i++) {
-            if (course.equals(list.get(i).code)) {
-                System.out.println(list.get(i).code);
-                list2.add(new Schedule(course));
+
+        String url = "jdbc:mysql://localhost:3306/Project";
+        String username = "root";
+        String password = "2007@Rohit";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, username, password);
+            // Statement stmt = con.createStatement(); //for the first time
+            // stmt.execute("create table complaints (complaint varchar(1000))");
+            PreparedStatement ptsmt = con.prepareStatement("update project set code = ? WHERE email = ? AND pass = ?");
+
+            ptsmt.setString(1, email);
+            ptsmt.setString(2, pass_by_user);
+            ptsmt.setString(3, course);
+
+            int result = ptsmt.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("\t---------------------------");
+                System.out.println("\t!!Registration successfully!!");
+                System.out.println("\t---------------------------");
             }
+
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        System.out.println("\t---------------------------");
-        System.out.println("\t!!Registration successfully!!");
-        System.out.println("\t---------------------------");
+
+        // for (int i = 0; i < 3; i++) {
+        // if (course.equals(list.get(i).code)) {
+        // System.out.println(list.get(i).code);
+        // list2.add(new Schedule(course));
+        // }
+        // }
+        // System.out.println("\t---------------------------");
+        // System.out.println("\t!!Registration successfully!!");
+        // System.out.println("\t---------------------------");
     }
 
     void ViewSchedule() {
