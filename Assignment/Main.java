@@ -23,7 +23,18 @@ public class Main {
             user = new Admin();
         }
 
-        user.login(choice);
+        if ((choice == 1 || choice == 2)) {
+            int temp;
+            System.out.println("New user enter(1/0) : ");
+            temp = sc.nextInt();
+            if (temp == 1)
+                user.signup();
+            else
+                user.login(choice);
+        } else {
+            user.login(choice);
+        }
+
         System.out.println("---------------------------------------------------");
         user.DisplayFunctionality();
         user.menu();

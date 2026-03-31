@@ -1,68 +1,97 @@
 package Assignment;
 
 import java.util.Scanner;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Connection;
 
 public abstract class Common_function {
 
     String email;
     String pass_by_user;
     StringBuffer password = new StringBuffer("123");
-    String temp, temp2;
 
     abstract void DisplayFunctionality();
 
     abstract void menu();
 
+    void signup() {
+        Scanner sc = new Scanner(System.in);
+        String email;
+        String pass;
+        System.out.print("Enter your Email-ID : ");
+        email = sc.next();
+        System.out.print("Create new password : ");
+        pass = sc.next();
+
+        String url = "jdbc:mysql://localhost:3306/Project";
+        String username = "root";
+        String password = "2007@Rohit";
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, username, password);
+            // Statement stmt = con.createStatement();
+            // stmt.execute("create table Project (email varchar(30),pass varchar(30))");
+            PreparedStatement pstmt = con.prepareStatement("insert into Project (email,pass) values(?,?)");
+
+            pstmt.setString(1, email);
+            pstmt.setString(2, pass);
+
+            int result = pstmt.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("---------------------------------------------------");
+                System.out.println("!! New user registered successfully !!");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
     void login(int choice) {
 
         Scanner sc = new Scanner(System.in);
 
-        // CREATING ACCOUNT FOR 1ST TIME
+        System.out.print("Enter your Email-ID : ");
+        email = sc.next();
+        System.out.print("Enter password : ");
+        pass_by_user = sc.next();
         if (choice == 1 || choice == 2) {
-            System.out.println("First Create Account");
-            while (true) {
-                System.out.print("Enter your Email-ID : ");
-                temp2 = sc.next();
-                if (temp2.contains("@gmail.com"))
-                    break;
-                else
-                    System.out.println("Invalid Email try again");
-            }
-            System.out.print("Enter new password : ");
-            temp = sc.next();
-        }
-        // LOGIN SECTION
+            String url = "jdbc:mysql://localhost:3306/Project";
+            String username = "root";
+            String password = "2007@Rohit";
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                Connection con = DriverManager.getConnection(url, username, password);
 
-        if (choice == 1 || choice == 2) {
-            System.out.println("After creating an account you need to login :");
-        }
-        while (true) {
-            System.out.print("Enter your Email-ID : ");
-            email = sc.next();
-            if (choice != 3 && !temp2.equals(email)) {
-                System.out.println("Invalid Email try again");
-            } else if (email.contains("@gmail.com"))
-                break;
-            else
-                System.out.println("Invalid Email try again");
-        }
+                PreparedStatement ptsmt = con.prepareStatement("SELECT*FROM Project WHERE email=? AND pass=?");
+                ptsmt.setString(1, email);
+                ptsmt.setString(2, pass_by_user);
 
-        while (true) {
-            System.out.print("Enter password : ");
-            pass_by_user = sc.next();
-            if (choice == 1 || choice == 2) {
-                if (pass_by_user.equals(temp)) {
+                ResultSet rs = ptsmt.executeQuery();
+
+                if (rs.next()) {
                     System.out.println("---------------------------------------------------");
-                    System.out.println("Login successful");
-                    break;
-                } else
-                    System.out.println("Incorrect password , Try again");
-            } else if (pass_by_user.equals(password.toString())) {
-                System.out.println("---------------------------------------------------");
-                System.out.println("Login successful");
-                break;
-            } else
-                System.out.println("Incorrect password ,Try again");
+                    System.out.println("Login Successful !!");
+                } else {
+                    System.out.println("Invalid Credentials try again!!");
+                    login(choice);
+                }
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        } else if (pass_by_user.equals(password.toString())) {
+            System.out.println("---------------------------------------------------");
+            System.out.println("Login successful");
+        } else {
+            System.out.println("Incorrect password ,Try again");
+            login(choice);
         }
         // sc.close();
 

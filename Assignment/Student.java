@@ -1,6 +1,12 @@
 package Assignment;
 
 import java.util.*;
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Student extends Common_function {
     Student() {
@@ -13,9 +19,12 @@ public class Student extends Common_function {
         System.out.println("1).View Available Course");
         System.out.println("2).Registration for course");
         System.out.println("3).View Schedule");
-        System.out.println("4).Track Academic Progress");
-        System.out.println("5).Drop Course");
-        System.out.println("6).Submit Complaint");
+        System.out.println("4).Drop Course");
+        System.out.println("5).Submit Complaint");
+        System.out.println("6).Track Academic Progress");
+
+        System.out.println("------------------------------------------------------");
+
     }
 
     void menu() {
@@ -32,17 +41,24 @@ public class Student extends Common_function {
                 RegisterCourse();
                 menu();
                 break;
+
             case 3:
                 ViewSchedule();
                 menu();
                 break;
+
             case 4:
                 DropCourse();
                 menu();
                 break;
+
+            case 5:
+                Complaints();
+                menu();
+                break;
+
             default:
                 System.out.println("Log out");
-
         }
     }
 
@@ -56,25 +72,23 @@ public class Student extends Common_function {
         sem = sc.nextInt();
         System.out.println("\tAvailable Courses in this Semester!!");
         System.out.println("\t-----------------------------------");
-        System.out.println("Course\t|\tCode\t| Professor\t|\tcredits");
-        System.out.println("--------------------------------------------------------------");
+        System.out.println("Course\t|\tCode\t| Professor\t|\tcredits\t|\tTimings");
+        System.out.println(
+                "--------------------------------------------------------------------------------------------------");
         if (sem == 1) {
-
-            list.add(new Courses("IoP", "AI103", "Sir1", 4));
-            list.add(new Courses("EC", "AI105", "Mam1", 4));
-            list.add(new Courses("IoCS", "AI101", "Mam2", 4));
+            list.clear();
+            list.add(new Courses("IoP", "AI103", "Sir1", 4, "8.30AM - 9.30AM"));
+            list.add(new Courses("EC", "AI105", "Mam1", 4, "9.30AM - 10.30AM"));
+            list.add(new Courses("IoCS", "AI101", "Mam2", 4, "10.30AM - 11.30AM"));
             list.forEach(System.out::print);
         } else if (sem == 2) {
-
-            list.add(new Courses("OOP", "AI106", "Sir1", 4));
-            list.add(new Courses("DS", "AI102", "Sir2", 4));
-            list.add(new Courses("EC", "EC106", "Sir3", 4));
+            list.clear();
+            list.add(new Courses("OOP", "AI106", "Sir1", 4, "2.00PM - 3.00PM"));
+            list.add(new Courses("DS", "AI102", "Sir2", 4, "3.00PM - 4.00PM"));
+            list.add(new Courses("EC", "EC106", "Sir3", 4, "4.00PM - 5.00PM"));
             list.forEach(System.out::print);
         }
-        // if (temp == 0) {
-        // System.out.println("\t----------------------------");
-        // menu();
-        // }
+
     }
 
     ArrayList<Courses> RegisteredCourses = new ArrayList<Courses>();
@@ -135,11 +149,13 @@ public class Student extends Common_function {
             System.out.println("No registered Courses");
         } else {
             System.out.println("Course\t|\tCode\t|Professor\t|");
+            System.out.println("--------------------------------------------");
             for (int i = 0; i < list2.size(); i++) {
                 for (int j = 0; j < list.size(); j++) {
                     if (list2.get(i).code.equals(list.get(j).code)) {
                         System.out
-                                .println(list.get(i).Title + "\t\t" + list.get(i).code + "\t\t" + list.get(i).Faculty);
+                                .println(
+                                        list.get(i).Title + "\t|\t" + list.get(i).code + "\t|\t" + list.get(i).Faculty);
                         break;
                     }
                 }
@@ -180,6 +196,38 @@ public class Student extends Common_function {
 
         } while (more == 1);
 
+    }
+
+    void Complaints() {
+        Scanner sc = new Scanner(System.in);
+        String complaints;
+
+        String username = "root";
+        String password = "2007@Rohit";
+        String url = "jdbc:mysql://localhost:3306/Project";
+
+        System.out.println("Type the problem you have been facing below : ");
+        complaints = sc.nextLine();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, username, password);
+            // Statement stmt = con.createStatement(); //for the first time
+            // stmt.execute("create table complaints (complaint varchar(1000))");
+            PreparedStatement ptsmt = con.prepareStatement("insert into complaints (complaint) values(?)");
+
+            ptsmt.setString(1, complaints);
+
+            int result = ptsmt.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("---------------------------------------------------");
+                System.out.println("!! Complaint registered successfully !!");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
 }
