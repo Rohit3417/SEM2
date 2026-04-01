@@ -12,13 +12,15 @@ public abstract class Common_function {
 
     String email;
     String pass_by_user;
-    StringBuffer password = new StringBuffer("123");
+    StringBuffer passwor = new StringBuffer("123");
+    String rollNo;
+    String FacultySubject;
 
     abstract void DisplayFunctionality();
 
     abstract void menu();
 
-    void signup() {
+    void signup(int choice) {
         Scanner sc = new Scanner(System.in);
         String email;
         String pass;
@@ -33,14 +35,38 @@ public abstract class Common_function {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, username, password);
-            // Statement stmt = con.createStatement();
-            // stmt.execute("create table Project (email varchar(30),pass varchar(30))");
-            PreparedStatement pstmt = con.prepareStatement("insert into Project (email,pass) values(?,?)");
+            Statement stmt = con.createStatement();
+            int result;
 
-            pstmt.setString(1, email);
-            pstmt.setString(2, pass);
+            if (choice == 2) {
+                System.out.print("Enter the course code you teach : ");
+                FacultySubject = sc.next();
 
-            int result = pstmt.executeUpdate();
+                // stmt.execute(
+                // "create table FacultyRegistration (email varchar(30),password
+                // varchar(30),Subject varchar(10))");
+                PreparedStatement pstmt = con
+                        .prepareStatement("insert into FacultyRegistration (email,password,Subject) values(?,?,?)");
+
+                pstmt.setString(1, email);
+                pstmt.setString(2, pass);
+                pstmt.setString(3, FacultySubject);
+                result = pstmt.executeUpdate();
+            } else {
+                System.out.print("Enter your Roll No. : ");
+                rollNo = sc.next();
+                // stmt.execute(
+                // "create table StudentRegistration (email varchar(30),password
+                // varchar(30),rollNo varchar(20))");
+
+                PreparedStatement pstmt = con
+                        .prepareStatement("insert into StudentRegistration (email,password,rollNo) values (?,?,?)");
+
+                pstmt.setString(1, email);
+                pstmt.setString(2, pass);
+                pstmt.setString(3, rollNo);
+                result = pstmt.executeUpdate();
+            }
 
             if (result > 0) {
                 System.out.println("---------------------------------------------------");
@@ -57,22 +83,42 @@ public abstract class Common_function {
 
         Scanner sc = new Scanner(System.in);
 
+        String url = "jdbc:mysql://localhost:3306/Project";
+        String username = "root";
+        String password = "2007@Rohit";
+
         System.out.print("Enter your Email-ID : ");
         email = sc.next();
         System.out.print("Enter password : ");
         pass_by_user = sc.next();
+        if (choice == 1) {
+            System.out.print("Enter your Roll NO. : ");
+            rollNo = sc.next();
+        } else if (choice == 2) {
+            System.out.print("Enter course code you teach : ");
+            FacultySubject = sc.next();
+        }
         if (choice == 1 || choice == 2) {
-            String url = "jdbc:mysql://localhost:3306/Project";
-            String username = "root";
-            String password = "2007@Rohit";
+
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 Connection con = DriverManager.getConnection(url, username, password);
-
-                PreparedStatement ptsmt = con
-                        .prepareStatement("SELECT*FROM Project WHERE email=? AND pass=? AND code = ?");
-                ptsmt.setString(1, email);
-                ptsmt.setString(2, pass_by_user);
+                PreparedStatement ptsmt = null;
+                if (choice == 1) {
+                    ptsmt = con
+                            .prepareStatement(
+                                    "SELECT*FROM studentregistration WHERE email=? AND password=? AND rollNo=?");
+                    ptsmt.setString(1, email);
+                    ptsmt.setString(2, pass_by_user);
+                    ptsmt.setString(3, rollNo);
+                } else {
+                    ptsmt = con
+                            .prepareStatement(
+                                    "SELECT*FROM facultyregistration WHERE email=? AND password=? AND Subject=?");
+                    ptsmt.setString(1, email);
+                    ptsmt.setString(2, pass_by_user);
+                    ptsmt.setString(3, FacultySubject);
+                }
 
                 ResultSet rs = ptsmt.executeQuery();
 
@@ -87,7 +133,7 @@ public abstract class Common_function {
             } catch (Exception e) {
                 System.out.println(e);
             }
-        } else if (pass_by_user.equals(password.toString())) {
+        } else if (pass_by_user.equals(passwor.toString())) {
             System.out.println("---------------------------------------------------");
             System.out.println("Login successful");
         } else {

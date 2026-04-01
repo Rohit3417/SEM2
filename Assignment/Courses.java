@@ -16,9 +16,10 @@ public class Courses {
     }
 
     @Override
-    public String toString() {
 
-        return Title + "\t|\t" + code + "\t|\t" + Faculty + "\t|\t" + Credits + "\t|\t" + timings + "\n";
+    public String toString() {
+        return String.format("| %-10s | %-8s | %-12s | %-8d | %-18s |\n",
+                Title, code, Faculty, Credits, timings);
     }
 
     @Override

@@ -7,14 +7,19 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int choice;
 
-        System.out.println("!! WELCOME TO THE COURSE REGISTRATION PROGRAM !!");
-        System.out.println("------------------------------------------------");
-        System.out.println("Enter : ");
+        System.out.println("=================================================");
+        System.out.printf("%40s\n", "COURSE REGISTRATION SYSTEM");
+        System.out.println("=================================================");
 
-        System.out.println("1 for Student login");
-        System.out.println("2 for Faculty login");
-        System.out.println("3 for Admin");
-        System.out.println("------------------------------------------------");
+        System.out.printf("| %-3s | %-35s |\n", "No", "Login Type");
+        System.out.println("-------------------------------------------------");
+
+        System.out.printf("| %-3d | %-35s |\n", 1, "Student Login");
+        System.out.printf("| %-3d | %-35s |\n", 2, "Faculty Login");
+        System.out.printf("| %-3d | %-35s |\n", 3, "Admin Login");
+
+        System.out.println("=================================================");
+        System.out.print("Enter your choice: ");
 
         Common_function user;
         choice = sc.nextInt();
@@ -31,7 +36,7 @@ public class Main {
             System.out.println("New user enter(1/0) : ");
             temp = sc.nextInt();
             if (temp == 1)
-                user.signup();
+                user.signup(choice);
             else
                 user.login(choice);
         } else {

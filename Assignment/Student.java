@@ -2,7 +2,6 @@ package Assignment;
 
 import java.util.*;
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,23 +9,33 @@ import java.sql.Statement;
 
 public class Student extends Common_function {
     Student() {
-        System.out.println("---------------------");
-        System.out.println("Student login");
-        System.out.println("---------------------");
+        System.out.println(" --------------------- ");
+        System.out.println("|   Student Login     |");
+        System.out.println(" --------------------- ");
     }
 
+    String username = "root";
+    String password = "2007@Rohit";
+    String url = "jdbc:mysql://localhost:3306/Project";
+
     void DisplayFunctionality() {
-        System.out.println("            FUNTIONALITY AVAILABLE");
-        System.out.println("            ----------------------");
-        System.out.println("1).View Available Course");
-        System.out.println("2).Registration for course");
-        System.out.println("3).View Schedule");
-        System.out.println("4).Drop Course");
-        System.out.println("5).Submit Complaint");
-        System.out.println("6).Track Academic Progress");
 
-        System.out.println("------------------------------------------------------");
+        System.out.println("=================================================");
+        System.out.printf("%25s\n", "FUNCTIONALITY");
+        System.out.println("=================================================");
 
+        System.out.printf("| %-3s | %-35s |\n", "No", "Option");
+        System.out.println("-------------------------------------------------");
+
+        System.out.printf("| %-3d | %-35s |\n", 1, "View Available Course");
+        System.out.printf("| %-3d | %-35s |\n", 2, "Registration for Course");
+        System.out.printf("| %-3d | %-35s |\n", 3, "View Schedule");
+        System.out.printf("| %-3d | %-35s |\n", 4, "Drop Course");
+        System.out.printf("| %-3d | %-35s |\n", 5, "Submit Complaint");
+        System.out.printf("| %-3d | %-35s |\n", 6, "Track Academic Progress");
+        System.out.printf("| %-3d | %-35s |\n", 7, "Logout");
+
+        System.out.println("=================================================");
     }
 
     void menu() {
@@ -68,29 +77,44 @@ public class Student extends Common_function {
     ArrayList<Courses> list = new ArrayList<Courses>();
 
     void ViewCourses() {
+
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Enter semester number : ");
-        sem = sc.nextInt();
-        System.out.println("\tAvailable Courses in this Semester!!");
-        System.out.println("\t-----------------------------------");
-        System.out.println("Course\t|\tCode\t| Professor\t|\tcredits\t|\tTimings");
-        System.out.println(
-                "--------------------------------------------------------------------------------------------------");
+        System.out.print("Enter semester number: ");
+        int sem = sc.nextInt();
+
+        System.out.println("======================================================================");
+        System.out.printf("%30s\n", "AVAILABLE COURSES");
+        System.out.println("======================================================================");
+
+        System.out.printf("| %-10s | %-8s | %-12s | %-8s | %-18s |\n",
+                "Course", "Code", "Professor", "Credits", "Timings");
+        System.out.println("----------------------------------------------------------------------");
+
+        list.clear();
+
         if (sem == 1) {
-            list.clear();
+
             list.add(new Courses("IoP", "AI103", "Sir1", 4, "8.30AM - 9.30AM"));
             list.add(new Courses("EC", "AI105", "Mam1", 4, "9.30AM - 10.30AM"));
             list.add(new Courses("IoCS", "AI101", "Mam2", 4, "10.30AM - 11.30AM"));
-            list.forEach(System.out::print);
+
         } else if (sem == 2) {
-            list.clear();
+
             list.add(new Courses("OOP", "AI106", "Sir1", 4, "2.00PM - 3.00PM"));
             list.add(new Courses("DS", "AI102", "Sir2", 4, "3.00PM - 4.00PM"));
             list.add(new Courses("EC", "EC106", "Sir3", 4, "4.00PM - 5.00PM"));
-            list.forEach(System.out::print);
+
+        } else {
+
+            System.out.printf("%30s\n", "Invalid Semester");
+            System.out.println("======================================================================");
+            return;
         }
 
+        list.forEach(System.out::print);
+
+        System.out.println("======================================================================");
     }
 
     ArrayList<Courses> RegisteredCourses = new ArrayList<Courses>();
@@ -98,8 +122,9 @@ public class Student extends Common_function {
     void RegisterCourse() {
         Scanner sc = new Scanner(System.in);
         temp = 1;
-        System.out.println("\tWELCOME TO REGISTRATION COURSE PAGE");
-        System.out.println("\t-----------------------------------");
+        System.out.println("-------------------------------------------------");
+        System.out.printf("| %-47s |\n", "WELCOME TO COURSE REGISTRATION PAGE");
+        System.out.println("-------------------------------------------------");
         ViewCourses();
         int more;
         do {
@@ -133,63 +158,76 @@ public class Student extends Common_function {
 
     void Register(String course) {
 
-        String url = "jdbc:mysql://localhost:3306/Project";
-        String username = "root";
-        String password = "2007@Rohit";
+        int i;
+        for (i = 0; i < 3; i++) {
+            if (course.equals(list.get(i).code)) {
+                list2.add(new Schedule(course));
+                break;
+            }
+        }
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, username, password);
-            // Statement stmt = con.createStatement(); //for the first time
-            // stmt.execute("create table complaints (complaint varchar(1000))");
-            PreparedStatement ptsmt = con.prepareStatement("update project set code = ? WHERE email = ? AND pass = ?");
+            // Statement stmt = con.createStatement(); // for the first time
+            // stmt.execute(
+            // "create table registeredCourses (RollNo varchar(1000),Title varchar(20),Code
+            // varchar(10),Faculty varchar(30),Credits int,Timings varchar(100))");
+            PreparedStatement ptsmt = con.prepareStatement(
+                    "insert into registeredCourses (RollNo,Title,Code,Faculty,Credits,Timings) values (?,?,?,?,?,?)");
 
-            ptsmt.setString(1, email);
-            ptsmt.setString(2, pass_by_user);
-            ptsmt.setString(3, course);
+            ptsmt.setString(1, rollNo);
+            ptsmt.setString(2, list.get(i).Title);
+            ptsmt.setString(3, list.get(i).code);
+            ptsmt.setString(4, list.get(i).Faculty);
+            ptsmt.setInt(5, list.get(i).Credits);
+            ptsmt.setString(6, list.get(i).timings);
 
             int result = ptsmt.executeUpdate();
 
             if (result > 0) {
-                System.out.println("\t---------------------------");
-                System.out.println("\t!!Registration successfully!!");
-                System.out.println("\t---------------------------");
+                System.out.println("=================================================");
+                System.out.printf("%35s\n", "REGISTRATION SUCCESSFUL");
+                System.out.println("=================================================");
             }
 
         } catch (Exception e) {
             System.out.println(e);
         }
-
-        // for (int i = 0; i < 3; i++) {
-        // if (course.equals(list.get(i).code)) {
-        // System.out.println(list.get(i).code);
-        // list2.add(new Schedule(course));
-        // }
-        // }
-        // System.out.println("\t---------------------------");
-        // System.out.println("\t!!Registration successfully!!");
-        // System.out.println("\t---------------------------");
     }
 
     void ViewSchedule() {
-        System.out.println("\t-----------------------------------------------");
-        System.out.println("\t !! SCHEDULE ACCORDING TO REGISTERED COURSES !!");
-        System.out.println("\t-----------------------------------------------");
+        System.out.println("======================================================================");
+        System.out.printf("%35s\n", "COURSE SCHEDULE");
+        System.out.println("======================================================================");
+
         if (list2.size() == 0) {
-            System.out.println("No registered Courses");
+
+            System.out.printf("%30s\n", "No Registered Courses");
+
         } else {
-            System.out.println("Course\t|\tCode\t|Professor\t|");
-            System.out.println("--------------------------------------------");
+
+            System.out.printf("| %-15s | %-10s | %-15s | %-20s |\n",
+                    "Course", "Code", "Professor", "Timings");
+            System.out.println("----------------------------------------------------------------------");
+
             for (int i = 0; i < list2.size(); i++) {
                 for (int j = 0; j < list.size(); j++) {
+
                     if (list2.get(i).code.equals(list.get(j).code)) {
-                        System.out
-                                .println(
-                                        list.get(i).Title + "\t|\t" + list.get(i).code + "\t|\t" + list.get(i).Faculty);
+
+                        System.out.printf("| %-15s | %-10s | %-15s | %-20s |\n",
+                                list.get(j).Title,
+                                list.get(j).code,
+                                list.get(j).Faculty,
+                                list.get(j).timings);
+
                         break;
                     }
                 }
             }
+
+            System.out.println("======================================================================");
         }
 
     }
@@ -201,40 +239,52 @@ public class Student extends Common_function {
             String course;
             System.out.print("Enter the course code you want to drop : ");
             course = sc.next();
-            int temp = 0;
-            for (int i = 0; i < list2.size(); i++) {
-                if (course.equals(list2.get(i).code)) {
-                    list2.remove(i);
-                    temp = 1;
-                    break;
-                }
-            }
-            if (temp == 0)
-                System.out.println("No such Course Registered for");
-            else {
-                System.out.println("\t---------------------------");
-                System.out.println("\t!! Course " + course + " dropped successfully!!");
-                System.out.println("\t---------------------------");
-            }
-            if (!list2.isEmpty()) {
-                System.out.print("Do you want to drop more of the courses (1/0) ? : ");
-                more = sc.nextInt();
+
+            if (dropFromDatabase(course)) {
+
+                System.out.println("=================================================");
+                System.out.printf("| %-47s |\n", "COURSE DROPPED SUCCESSFULLY");
+                System.out.printf("| %-47s |\n", "Course: " + course);
+                System.out.println("=================================================");
+
             } else {
-                System.out.println("No more courses left to drop");
-                break;
+
+                System.out.println("=================================================");
+                System.out.printf("| %-47s |\n", "NOT REGISTERED FOR THIS COURSE");
+                System.out.println("=================================================");
+
             }
+
+            System.out.print("Do you want to drop more of the courses (1/0) ? : ");
+            more = sc.nextInt();
 
         } while (more == 1);
 
     }
 
+    boolean dropFromDatabase(String course) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, username, password);
+
+            PreparedStatement pstmt = con.prepareStatement("delete from registeredCourses WHERE Code = ?");
+            pstmt.setString(1, course);
+
+            int rs = pstmt.executeUpdate();
+            if (rs > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
     void Complaints() {
         Scanner sc = new Scanner(System.in);
         String complaints;
-
-        String username = "root";
-        String password = "2007@Rohit";
-        String url = "jdbc:mysql://localhost:3306/Project";
 
         System.out.println("Type the problem you have been facing below : ");
         complaints = sc.nextLine();
@@ -242,17 +292,20 @@ public class Student extends Common_function {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, username, password);
-            // Statement stmt = con.createStatement(); //for the first time
-            // stmt.execute("create table complaints (complaint varchar(1000))");
-            PreparedStatement ptsmt = con.prepareStatement("insert into complaints (complaint) values(?)");
+            Statement stmt = con.createStatement(); // for the first time
+            // stmt.execute("create table complaints (Complaint varchar(1000),Status
+            // varchar(20))");
+            PreparedStatement ptsmt = con.prepareStatement("insert into complaints (Complaint,Status) values(?,?)");
 
             ptsmt.setString(1, complaints);
+            ptsmt.setString(2, "PENDING");
 
             int result = ptsmt.executeUpdate();
 
             if (result > 0) {
                 System.out.println("---------------------------------------------------");
-                System.out.println("!! Complaint registered successfully !!");
+                System.out.println("!!  Complaint registered successfully  !!");
+                System.out.println("---------------------------------------------------");
             }
 
         } catch (Exception e) {
