@@ -4,7 +4,6 @@ import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Student extends Common_function {
@@ -69,7 +68,9 @@ public class Student extends Common_function {
                 break;
 
             default:
-                System.out.println("Log out");
+                System.out.println("=================================");
+                System.out.println("|        LOGGED  OUT            |");
+                System.out.println("=================================");
         }
     }
 

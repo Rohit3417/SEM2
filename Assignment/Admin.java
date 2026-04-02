@@ -63,39 +63,54 @@ public class Admin extends Common_function {
                 menu();
                 break;
             default:
-                System.out.println("!!  LOGGED OUT  !!");
+
+                System.out.println("=================================");
+                System.out.println("|        LOGGED  OUT            |");
+                System.out.println("=================================");
         }
     }
 
     void ManageCourseCatalog() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter : ");
-        System.out.println("1).To View all courses| 2).To add Course | 3).To delete a course");
+        System.out.println("\n=================================");
+        System.out.println("|      COURSE MANAGEMENT        |");
+        System.out.println("=================================");
+        System.out.println("|  1. View all courses          |");
+        System.out.println("|  2. Add a course              |");
+        System.out.println("|  3. Delete a course           |");
+        System.out.println("=================================");
+        System.out.print("Enter your choice: ");
         int temp = sc.nextInt();
 
         try {
             Connection con = DriverManager.getConnection(url, username, password);
-
             Statement stmt = con.createStatement();
 
             if (temp == 1) {
-                ResultSet rs = stmt.executeQuery("select *from Courses");
-                System.out.println("Course Name | Code | Professor");
-                System.out.println("-------------------------------");
+                ResultSet rs = stmt.executeQuery("select * from Courses");
+                System.out.println("\n===========================================");
+                System.out.println("|    Course Name    |  Code  | Professor  |");
+                System.out.println("===========================================");
                 while (rs.next()) {
-                    System.out.println(rs.getString("Course_Name") + " | " + rs.getString("Code") + " | "
-                            + rs.getString("Professor"));
-                    System.out.println("---------------------------------------");
+                    System.out.printf("| %-17s | %-6s | %-10s |%n",
+                            rs.getString("Course_Name"),
+                            rs.getString("Code"),
+                            rs.getString("Professor"));
+                    System.out.println("-------------------------------------------");
                 }
+
             } else if (temp == 2) {
                 String name, code, professor;
-                System.out.println("TO ADD NEW COURSE");
-                System.out.print("Enter course title : ");
+                System.out.println("\n=================================");
+                System.out.println("|       ADD NEW COURSE          |");
+                System.out.println("=================================");
+                System.out.print("| Course title   : ");
                 name = sc.next();
-                System.out.print("Enter Course code : ");
+                System.out.print("| Course code    : ");
                 code = sc.next();
-                System.out.print("Enter Professor name for this course : ");
+                System.out.print("| Professor name : ");
                 professor = sc.next();
+                System.out.println("---------------------------------");
 
                 PreparedStatement pstmt = con
                         .prepareStatement("insert into Courses (Course_Name,Code,Professor) values (?,?,?)");
@@ -104,30 +119,64 @@ public class Admin extends Common_function {
                 pstmt.setString(3, professor);
 
                 int result = pstmt.executeUpdate();
-                if (result > 0)
-                    System.out.println("Courses added successfully");
-                else
-                    System.out.println("Course not added");
+                System.out.println(result > 0
+                        ? "| [OK] Course \"" + name + "\" added successfully!"
+                        : "| [!!] Failed to add course. Try again.");
+                System.out.println("=================================");
+
             } else if (temp == 3) {
                 String code;
-                System.out.print("Enter course code to delete : ");
+                System.out.println("\n=================================");
+                System.out.println("|        DELETE COURSE          |");
+                System.out.println("=================================");
+                System.out.print("| Enter course code to delete : ");
                 code = sc.next();
+                System.out.println("---------------------------------");
+
                 PreparedStatement pstmt = con.prepareStatement("delete from Courses where Code = ?");
                 pstmt.setString(1, code);
                 int result = pstmt.executeUpdate();
-                if (result > 0)
-                    System.out.println("Course deleted successfully");
-                else
-                    System.out.println("No such Course available");
+                System.out.println(result > 0
+                        ? "| [OK] Course \"" + code + "\" deleted successfully."
+                        : "| [!!] No course found with code \"" + code + "\".");
+                System.out.println("=================================");
+            }
+
+        } catch (Exception e) {
+            System.out.println("\n=================================");
+            System.out.println("| [ERR] " + e.getMessage());
+            System.out.println("=================================");
+        }
+    }
+
+    void ManageStudentRecord() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\n=================================");
+        System.out.println("|       MANAGE STUDENT RECORDS    |");
+        System.out.println("=================================");
+        System.out.println("|  1. View Info              |");
+        System.out.println("|  2. Update student roll no.       |");
+        System.out.println("=================================");
+        System.out.print("| Enter your choice : ");
+        int choice = sc.nextInt();
+        System.out.println("---------------------------------");
+
+        try {
+            Connection con = DriverManager.getConnection(url, username, password);
+            Statement stmt = con.createStatement();
+
+            if (choice == 1) {
+                PreparedStatement pstmt = con.prepareStatement("select *from studentregistration");
+                ResultSet rs = pstmt.executeQuery();
+
+                while (rs.next()) {
+                    System.out.println(rs.getString("email") + " " + rs.getString("rollNo"));
+                }
             }
 
         } catch (Exception e) {
             System.out.println(e);
         }
-    }
-
-    void ManageStudentRecord() {
-
     }
 
     void AssignProfessor() {
@@ -138,23 +187,32 @@ public class Admin extends Common_function {
 
             String newProfessor;
             String code;
-            System.out.print("Enter the name of new Professor : ");
+
+            System.out.println("\n=================================");
+            System.out.println("|      ASSIGN NEW PROFESSOR     |");
+            System.out.println("=================================");
+            System.out.print("| New Professor name : ");
             newProfessor = sc.next();
-            System.out.print("Their Course Expertise code : ");
+            System.out.print("| Course code        : ");
             code = sc.next();
+            System.out.println("---------------------------------");
 
             PreparedStatement pstmt = con.prepareStatement("update Courses set Professor = ? where Code = ?");
             pstmt.setString(1, newProfessor);
             pstmt.setString(2, code);
 
             int check = pstmt.executeUpdate();
-            if (check > 0)
-                System.out.println("New professor assigned successfully");
-            else
-                System.out.println("Error occured");
+            if (check > 0) {
+                System.out.println("| [OK] Prof. " + newProfessor + " assigned to course " + code);
+            } else {
+                System.out.println("| [!!] No course found with code \"" + code + "\"");
+            }
+            System.out.println("=================================");
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("\n=================================");
+            System.out.println("| [ERR] " + e.getMessage());
+            System.out.println("=================================");
         }
     }
 

@@ -51,17 +51,97 @@ public class Faculty extends Common_function {
                 break;
 
             default:
-                System.out.println(" LOGOUT ");
+                System.out.println("=================================");
+                System.out.println("|        LOGGED  OUT            |");
+                System.out.println("=================================");
         }
     }
 
     void ManageCourses() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("----------------------------------------------");
-        System.out.println("Enter : ");
-        System.out.println("1). TO view Courses ");
-        System.out.println("2).TO update Timing of classes ");
+        System.out.println("\n=================================");
+        System.out.println("|       MANAGE COURSES          |");
+        System.out.println("=================================");
+        System.out.println("|  1. View courses              |");
+        System.out.println("|  2. Update class timing       |");
+        System.out.println("|  3. Update subject credits    |");
+        System.out.println("=================================");
+        System.out.print("| Enter your choice : ");
+        int choice = sc.nextInt();
+        System.out.println("---------------------------------");
+
+        try {
+            Connection con = DriverManager.getConnection(url, username, password);
+            Statement stmt = con.createStatement();
+
+            if (choice == 1) {
+                PreparedStatement pstmt = con.prepareStatement("select *from registeredCourses where Code = ?");
+                pstmt.setString(1, FacultySubject);
+
+                ResultSet rs = pstmt.executeQuery();
+                System.out.println("\n=================================================================");
+                System.out.printf("| %-10s | %-15s | %-6s | %-12s | %-7s | %-10s |\n",
+                        "Roll No", "Title", "Code", "Faculty", "Credits", "Timings");
+                System.out.println("=================================================================");
+                while (rs.next()) {
+                    System.out.printf("| %-10s | %-15s | %-6s | %-12s | %-7d | %-10s |\n",
+                            rs.getString("RollNo"),
+                            rs.getString("Title"),
+                            rs.getString("Code"),
+                            rs.getString("Faculty"),
+                            rs.getInt("Credits"),
+                            rs.getString("Timings"));
+                    System.out.println("-----------------------------------------------------------------");
+                }
+
+            } else if (choice == 2) {
+                String newTime;
+                System.out.println("\n=================================");
+                System.out.println("|      UPDATE CLASS TIMING      |");
+                System.out.println("=================================");
+                System.out.print("| New timing : ");
+                sc.nextLine();
+                newTime = sc.nextLine();
+                System.out.println("---------------------------------");
+
+                PreparedStatement pstmt = con
+                        .prepareStatement("update registeredCourses set Timings = ? where Code = ?");
+                pstmt.setString(1, newTime);
+                pstmt.setString(2, FacultySubject);
+
+                int result = pstmt.executeUpdate();
+                System.out.println(result > 0
+                        ? "| [OK] Timing updated to : " + newTime
+                        : "| [!!] Could not update. Course not found.");
+                System.out.println("=================================");
+
+            } else if (choice == 3) {
+                int newCredit;
+                System.out.println("\n=================================");
+                System.out.println("|      UPDATE SUBJECT CREDITS   |");
+                System.out.println("=================================");
+                System.out.print("| New credit value : ");
+                newCredit = sc.nextInt();
+                System.out.println("---------------------------------");
+
+                PreparedStatement pstmt = con
+                        .prepareStatement("update registeredCourses set Credits = ? where Code = ?");
+                pstmt.setInt(1, newCredit);
+                pstmt.setString(2, FacultySubject);
+
+                int result = pstmt.executeUpdate();
+                System.out.println(result > 0
+                        ? "| [OK] Credits updated to : " + newCredit
+                        : "| [!!] Error occurred while updating.");
+                System.out.println("=================================");
+            }
+
+        } catch (Exception e) {
+            System.out.println("\n=================================");
+            System.out.println("| [ERR] " + e.getMessage());
+            System.out.println("=================================");
+        }
     }
 
     void ViewEnrolledStudents() {
