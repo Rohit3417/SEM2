@@ -4,6 +4,7 @@ import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Student extends Common_function {
@@ -66,7 +67,10 @@ public class Student extends Common_function {
                 Complaints();
                 menu();
                 break;
-
+            case 6:
+                TrackCG();
+                menu();
+                break;
             default:
                 System.out.println("=================================");
                 System.out.println("|        LOGGED  OUT            |");
@@ -202,33 +206,29 @@ public class Student extends Common_function {
         System.out.printf("%35s\n", "COURSE SCHEDULE");
         System.out.println("======================================================================");
 
-        if (list2.size() == 0) {
+        try {
+            Connection con = DriverManager.getConnection(url, username, password);
+            PreparedStatement pstmt = con.prepareStatement(
+                    "select * from registeredCourses where RollNo = ?");
+            pstmt.setString(1, rollNo);
+            ResultSet rs = pstmt.executeQuery();
 
-            System.out.printf("%30s\n", "No Registered Courses");
+            System.out.println("===============================================================");
+            System.out.println(" Title              | Code   | Faculty           | Timings     ");
+            System.out.println("---------------------------------------------------------------");
 
-        } else {
-
-            System.out.printf("| %-15s | %-10s | %-15s | %-20s |\n",
-                    "Course", "Code", "Professor", "Timings");
-            System.out.println("----------------------------------------------------------------------");
-
-            for (int i = 0; i < list2.size(); i++) {
-                for (int j = 0; j < list.size(); j++) {
-
-                    if (list2.get(i).code.equals(list.get(j).code)) {
-
-                        System.out.printf("| %-15s | %-10s | %-15s | %-20s |\n",
-                                list.get(j).Title,
-                                list.get(j).code,
-                                list.get(j).Faculty,
-                                list.get(j).timings);
-
-                        break;
-                    }
-                }
+            while (rs.next()) {
+                System.out.printf(" %-18s | %-6s | %-16s | %-12s \n",
+                        rs.getString("Title"),
+                        rs.getString("Code"),
+                        rs.getString("Faculty"),
+                        rs.getString("Timings"));
             }
 
-            System.out.println("======================================================================");
+            System.out.println("===============================================================");
+
+        } catch (Exception e) {
+            System.out.println(e);
         }
 
     }
@@ -308,6 +308,34 @@ public class Student extends Common_function {
                 System.out.println("!!  Complaint registered successfully  !!");
                 System.out.println("---------------------------------------------------");
             }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    void TrackCG() {
+        try {
+            Connection con = DriverManager.getConnection(url, username, password);
+
+            Statement stmt = con.createStatement();
+            PreparedStatement pstmt = con.prepareStatement(
+                    "select * from studentregistration where rollNo = ?");
+            pstmt.setString(1, rollNo);
+            ResultSet rs = pstmt.executeQuery();
+
+            System.out.println("========================================");
+            System.out.println("         STUDENT CGPA DETAILS           ");
+            System.out.println("----------------------------------------");
+
+            while (rs.next()) {
+
+                System.out.println("| CGPA (Previous Semester) :           |");
+                System.out.printf("| %-35.2f |\n", rs.getFloat("CGPA"));
+
+            }
+
+            System.out.println("========================================");
 
         } catch (Exception e) {
             System.out.println(e);

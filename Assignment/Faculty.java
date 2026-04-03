@@ -178,7 +178,7 @@ public class Faculty extends Common_function {
                     ResultSet rp = ps.executeQuery();
 
                     if (rp.next()) {
-                        String email = rp.getString("email");
+                        String email = rp.getString("Email");
 
                         System.out.printf("| %-30s | %-25s |\n", rollNo, email);
                     }

@@ -155,7 +155,7 @@ public class Admin extends Common_function {
         System.out.println("|       MANAGE STUDENT RECORDS    |");
         System.out.println("=================================");
         System.out.println("|  1. View Info              |");
-        System.out.println("|  2. Update student roll no.       |");
+        System.out.println("|  2. Update CGPA of student       |");
         System.out.println("=================================");
         System.out.print("| Enter your choice : ");
         int choice = sc.nextInt();
@@ -169,13 +169,48 @@ public class Admin extends Common_function {
                 PreparedStatement pstmt = con.prepareStatement("select *from studentregistration");
                 ResultSet rs = pstmt.executeQuery();
 
+                System.out.println("\n===========================================");
+                System.out.printf("| %-25s | %-12s |\n", "Email", "Roll No");
+                System.out.println("===========================================");
                 while (rs.next()) {
-                    System.out.println(rs.getString("email") + " " + rs.getString("rollNo"));
+                    System.out.printf("| %-25s | %-12s |\n",
+                            rs.getString("email"),
+                            rs.getString("rollNo"),
+                            rs.getFloat("CGPA"));
+
+                    System.out.println("-------------------------------------------");
                 }
+
+            } else if (choice == 2) {
+                float newCGPA;
+                String roll;
+
+                System.out.println("\n=================================");
+                System.out.println("|        UPDATE CGPA            |");
+                System.out.println("=================================");
+                System.out.print("| Student roll no. : ");
+                roll = sc.next();
+                System.out.print("| CGPA             : ");
+                newCGPA = sc.nextFloat();
+                System.out.println("---------------------------------");
+
+                PreparedStatement pstmt = con
+                        .prepareStatement("update studentregistration set CGPA = ? where rollNo = ?");
+                pstmt.setFloat(1, newCGPA);
+                pstmt.setString(2, roll);
+
+                int rs = pstmt.executeUpdate();
+                if (rs > 0)
+                    System.out.println("| [OK] CGPA updated to " + newCGPA + " for " + roll);
+                else
+                    System.out.println("| [!!] No student found with roll no. " + roll);
+                System.out.println("=================================");
             }
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("\n=================================");
+            System.out.println("| [ERR] " + e.getMessage());
+            System.out.println("=================================");
         }
     }
 
@@ -254,6 +289,7 @@ public class Admin extends Common_function {
                 } else {
                     System.out.println("No such complaint pending ");
                 }
+
             }
 
         } catch (Exception e) {
