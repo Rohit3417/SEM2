@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
+
 import java.util.Scanner;
 
 public class Faculty extends Common_function {
@@ -19,7 +18,8 @@ public class Faculty extends Common_function {
     String username = "root";
     String password = "2007@Rohit";
 
-    void DisplayFunctionality() {
+    @Override
+    public void DisplayFunctionality() {
 
         System.out.println("=========================================");
         System.out.printf("%20s\n", "FUNCTIONALITY");
@@ -35,8 +35,9 @@ public class Faculty extends Common_function {
         System.out.println("=========================================");
     }
 
-    void menu() {
-        Scanner sc = new Scanner(System.in);
+    @Override
+    public void menu() {
+        Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
         int function;
         System.out.print("Enter the number to choose a function from list : ");
         function = sc.nextInt();
@@ -58,7 +59,7 @@ public class Faculty extends Common_function {
     }
 
     void ManageCourses() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
 
         System.out.println("\n=================================");
         System.out.println("|       MANAGE COURSES          |");
@@ -73,7 +74,6 @@ public class Faculty extends Common_function {
 
         try {
             Connection con = DriverManager.getConnection(url, username, password);
-            Statement stmt = con.createStatement();
 
             if (choice == 1) {
                 PreparedStatement pstmt = con.prepareStatement("select *from registeredCourses where Code = ?");
@@ -148,7 +148,6 @@ public class Faculty extends Common_function {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, username, password);
-            Statement stmt = con.createStatement();
 
             PreparedStatement pstmt = con.prepareStatement("select RollNo from registeredCourses WHERE Code = ?");
 

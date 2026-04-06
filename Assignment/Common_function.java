@@ -4,24 +4,24 @@ import java.util.Scanner;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.sql.Connection;
 
 public abstract class Common_function {
 
-    String email;
-    String pass_by_user;
-    StringBuffer passwor = new StringBuffer("123");
-    String rollNo;
-    String FacultySubject;
+    protected String email;
+    protected String pass_by_user;
+    // StringBuffer passwor = new StringBuffer("123");
+    private static final String ADMIN_PASSWORD = "123";
+    protected String rollNo;
+    protected String FacultySubject;
 
     abstract void DisplayFunctionality();
 
     abstract void menu();
 
-    void signup(int choice) {
-        Scanner sc = new Scanner(System.in);
+    protected void signup(int choice) {
+        Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
         String email;
         String pass;
         System.out.print("Enter your Email-ID : ");
@@ -35,7 +35,7 @@ public abstract class Common_function {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, username, password);
-            Statement stmt = con.createStatement();
+
             int result;
 
             if (choice == 2) {
@@ -79,9 +79,9 @@ public abstract class Common_function {
 
     }
 
-    void login(int choice) {
+    protected void login(int choice) {
 
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
 
         String url = "jdbc:mysql://localhost:3306/Project";
         String username = "root";
@@ -133,14 +133,13 @@ public abstract class Common_function {
             } catch (Exception e) {
                 System.out.println(e);
             }
-        } else if (pass_by_user.equals(passwor.toString())) {
+        } else if (pass_by_user.equals(ADMIN_PASSWORD)) {
             System.out.println("---------------------------------------------------");
             System.out.println("Login successful");
         } else {
             System.out.println("Incorrect password ,Try again");
             login(choice);
         }
-        // sc.close();
 
     }
 

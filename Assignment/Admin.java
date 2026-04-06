@@ -2,7 +2,6 @@ package Assignment;
 
 import java.sql.DriverManager;
 import java.util.Scanner;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +21,8 @@ public class Admin extends Common_function {
     String username = "root";
     String password = "2007@Rohit";
 
-    void DisplayFunctionality() {
+    @Override
+    public void DisplayFunctionality() {
 
         System.out.println("=========================================");
         System.out.printf("%20s\n", "FUNCTIONALITY AVAILABLE");
@@ -40,8 +40,9 @@ public class Admin extends Common_function {
         System.out.println("=========================================");
     }
 
-    void menu() {
-        Scanner sc = new Scanner(System.in);
+    @Override
+    public void menu() {
+        Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
         int function;
         System.out.print("Enter the number to choose a function from list : ");
         function = sc.nextInt();
@@ -71,7 +72,7 @@ public class Admin extends Common_function {
     }
 
     void ManageCourseCatalog() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
         System.out.println("\n=================================");
         System.out.println("|      COURSE MANAGEMENT        |");
         System.out.println("=================================");
@@ -150,7 +151,7 @@ public class Admin extends Common_function {
     }
 
     void ManageStudentRecord() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
         System.out.println("\n=================================");
         System.out.println("|       MANAGE STUDENT RECORDS    |");
         System.out.println("=================================");
@@ -163,7 +164,6 @@ public class Admin extends Common_function {
 
         try {
             Connection con = DriverManager.getConnection(url, username, password);
-            Statement stmt = con.createStatement();
 
             if (choice == 1) {
                 PreparedStatement pstmt = con.prepareStatement("select *from studentregistration");
@@ -215,10 +215,9 @@ public class Admin extends Common_function {
     }
 
     void AssignProfessor() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
         try {
             Connection con = DriverManager.getConnection(url, username, password);
-            Statement stmt = con.createStatement();
 
             String newProfessor;
             String code;
@@ -252,7 +251,7 @@ public class Admin extends Common_function {
     }
 
     void HandleComplaints() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
         try {
             Connection con = DriverManager.getConnection(url, username, password);
             Statement stmt = con.createStatement();

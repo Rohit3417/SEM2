@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+// import java.sql.Statement;
 
 public class Student extends Common_function {
     Student() {
@@ -18,7 +18,8 @@ public class Student extends Common_function {
     String password = "2007@Rohit";
     String url = "jdbc:mysql://localhost:3306/Project";
 
-    void DisplayFunctionality() {
+    @Override
+    public void DisplayFunctionality() {
 
         System.out.println("=================================================");
         System.out.printf("%25s\n", "FUNCTIONALITY");
@@ -38,8 +39,9 @@ public class Student extends Common_function {
         System.out.println("=================================================");
     }
 
-    void menu() {
-        Scanner sc = new Scanner(System.in);
+    @Override
+    public void menu() {
+        Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
         int function;
         System.out.print("Enter the number to choose a function from list : ");
         function = sc.nextInt();
@@ -83,7 +85,7 @@ public class Student extends Common_function {
 
     void ViewCourses() {
 
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
 
         System.out.print("Enter semester number: ");
         int sem = sc.nextInt();
@@ -125,7 +127,7 @@ public class Student extends Common_function {
     ArrayList<Courses> RegisteredCourses = new ArrayList<Courses>();
 
     void RegisterCourse() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
         temp = 1;
         System.out.println("-------------------------------------------------");
         System.out.printf("| %-47s |\n", "WELCOME TO COURSE REGISTRATION PAGE");
@@ -234,7 +236,7 @@ public class Student extends Common_function {
     }
 
     void DropCourse() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
         int more;
         do {
             String course;
@@ -284,7 +286,7 @@ public class Student extends Common_function {
     }
 
     void Complaints() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
         String complaints;
 
         System.out.println("Type the problem you have been facing below : ");
@@ -293,7 +295,7 @@ public class Student extends Common_function {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, username, password);
-            Statement stmt = con.createStatement(); // for the first time
+            // Statement stmt = con.createStatement(); // for the first time
             // stmt.execute("create table complaints (Complaint varchar(1000),Status
             // varchar(20))");
             PreparedStatement ptsmt = con.prepareStatement("insert into complaints (Complaint,Status) values(?,?)");
@@ -318,7 +320,6 @@ public class Student extends Common_function {
         try {
             Connection con = DriverManager.getConnection(url, username, password);
 
-            Statement stmt = con.createStatement();
             PreparedStatement pstmt = con.prepareStatement(
                     "select * from studentregistration where rollNo = ?");
             pstmt.setString(1, rollNo);
