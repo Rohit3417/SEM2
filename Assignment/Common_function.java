@@ -29,12 +29,9 @@ public abstract class Common_function {
         System.out.print("Create new password : ");
         pass = sc.next();
 
-        String url = "jdbc:mysql://localhost:3306/Project";
-        String username = "root";
-        String password = "2007@Rohit";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection(url, username, password);
+            Connection con = DBConnection.getConnection();
 
             int result;
 
@@ -83,10 +80,6 @@ public abstract class Common_function {
 
         Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
 
-        String url = "jdbc:mysql://localhost:3306/Project";
-        String username = "root";
-        String password = "2007@Rohit";
-
         System.out.print("Enter your Email-ID : ");
         email = sc.next();
         System.out.print("Enter password : ");
@@ -102,7 +95,7 @@ public abstract class Common_function {
 
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                Connection con = DriverManager.getConnection(url, username, password);
+                Connection con = DBConnection.getConnection();
                 PreparedStatement ptsmt = null;
                 if (choice == 1) {
                     ptsmt = con

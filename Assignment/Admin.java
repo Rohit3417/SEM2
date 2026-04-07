@@ -17,9 +17,9 @@ public class Admin extends Common_function {
 
     }
 
-    String url = "jdbc:mysql://localhost:3306/Project";
-    String username = "root";
-    String password = "2007@Rohit";
+    // String url = "jdbc:mysql://localhost:3306/Project";
+    // String username = "root";
+    // String password = "2007@Rohit";
 
     @Override
     public void DisplayFunctionality() {
@@ -84,7 +84,7 @@ public class Admin extends Common_function {
         int temp = sc.nextInt();
 
         try {
-            Connection con = DriverManager.getConnection(url, username, password);
+            Connection con = DBConnection.getConnection();
             Statement stmt = con.createStatement();
 
             if (temp == 1) {
@@ -163,7 +163,7 @@ public class Admin extends Common_function {
         System.out.println("---------------------------------");
 
         try {
-            Connection con = DriverManager.getConnection(url, username, password);
+            Connection con = DBConnection.getConnection();
 
             if (choice == 1) {
                 PreparedStatement pstmt = con.prepareStatement("select *from studentregistration");
@@ -217,7 +217,7 @@ public class Admin extends Common_function {
     void AssignProfessor() {
         Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
         try {
-            Connection con = DriverManager.getConnection(url, username, password);
+            Connection con = DBConnection.getConnection();
 
             String newProfessor;
             String code;
@@ -253,7 +253,7 @@ public class Admin extends Common_function {
     void HandleComplaints() {
         Scanner sc = ScannerUtil.getInstance(); // reusing the single shared one
         try {
-            Connection con = DriverManager.getConnection(url, username, password);
+            Connection con = DBConnection.getConnection();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT *FROM complaints");
 

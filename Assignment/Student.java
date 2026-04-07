@@ -145,7 +145,7 @@ public class Student extends Common_function {
                 System.out.println("To register to this course :");
                 System.out.println("Have you cleared IoCS(AI101) course in sem 1 :");
                 preq = sc.next();
-                if (preq.contains("NO") || preq.contains("no") || preq.contains("No")) {
+                if (preq.equalsIgnoreCase("no")) {
                     System.out.println("You need to complete the AI101 course before!!");
                 } else {
                     Register(course);

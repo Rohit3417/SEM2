@@ -14,10 +14,6 @@ public class Faculty extends Common_function {
         System.out.println(" --------------------- ");
     }
 
-    String url = "jdbc:mysql://localhost:3306/Project";
-    String username = "root";
-    String password = "2007@Rohit";
-
     @Override
     public void DisplayFunctionality() {
 
@@ -73,7 +69,7 @@ public class Faculty extends Common_function {
         System.out.println("---------------------------------");
 
         try {
-            Connection con = DriverManager.getConnection(url, username, password);
+            Connection con = DBConnection.getConnection();
 
             if (choice == 1) {
                 PreparedStatement pstmt = con.prepareStatement("select *from registeredCourses where Code = ?");
@@ -147,7 +143,7 @@ public class Faculty extends Common_function {
     void ViewEnrolledStudents() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection(url, username, password);
+            Connection con = DBConnection.getConnection();
 
             PreparedStatement pstmt = con.prepareStatement("select RollNo from registeredCourses WHERE Code = ?");
 
